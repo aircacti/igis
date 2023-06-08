@@ -18,6 +18,12 @@ class config
 
     // Display detailed error messages instead of a generalized error page
     public $debug = true;
+
+    // Default language for translations
+    public $mainLanguage = "en";
+
+    // Display the "Missing translation" message when a translation is missing instead of displaying the translation for the main language
+    public $missingTranslation = true;
 }
 
 

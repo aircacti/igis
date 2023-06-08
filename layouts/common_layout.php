@@ -13,7 +13,7 @@
 
     <p> {{ print_r($request->language); }} </p>
     <p>Ble ble ble {{ echo 'test'; }}</p>
-    <p>{{ translate($request->language, 'Welcome'); }} </p>
+    <p>{{ translate('Welcome'); }} </p>
 
 </body>
 
