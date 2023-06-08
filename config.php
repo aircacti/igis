@@ -1,10 +1,31 @@
 <?php
 
+// *****************************************
+// *****************************************
+//             Configuration file
+// *****************************************
+// *****************************************
+
+
 class config
 {
-    public $debug = true;
+
+    // Assign a domain to the site
     public $domain = "igis.igis";
 
-    // If false errors descriptions are not beeing displayed. Just basic error page instead.
+    // Display if there is a page with a different case url
+    public $uri_case_sensitive = false;
 
+    // Display detailed error messages instead of a generalized error page
+    public $debug = true;
 }
+
+
+// *****************************************
+// *****************************************
+//             Put in a variable
+// *****************************************
+// *****************************************
+
+
+$config = new config();

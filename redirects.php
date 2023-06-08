@@ -3,10 +3,12 @@
 
 // *****************************************
 // *****************************************
-//       This file collects all requests
+//             Page redirects
 // *****************************************
 // *****************************************
 
 
-// Initialize all logic
-require_once('init.php');
+// Add redirects
+$redirects = [
+    '/home' => '/'
+];
