@@ -33,6 +33,8 @@ require_once('redirects.php');
 // throw_error($config, code, description) is available
 require_once('handle/throw_error.php');
 
+// Get the rendering engine
+require_once('handle/render.php');
 
 // *****************************************
 // *****************************************
@@ -74,4 +76,16 @@ if (!file_exists($current_page->getContentPath())) {
 // *****************************************
 
 
-echo file_get_contents($current_page->getContentPath());
+// Pass the variables you define here
+$customVariables = [
+    'customVariable' => 'isHere'
+];
+
+// Pass already existing variables without defining the content
+$existingVariables = ['request'];
+
+// Prepare the page
+$renderedOutput = renderPhpCode($current_page->getContentPath(), compact(...$existingVariables) + $customVariables);
+
+// Generate page
+echo $renderedOutput;

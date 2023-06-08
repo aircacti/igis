@@ -17,8 +17,7 @@ $pages = [];
 // Add new page
 $pages[] = new page('/', 'home', 'pages/home.html');
 $pages[] = new page('/admin', 'Admin Login', 'pages/admin.html');
-
-
+$pages[] = new page('/test', 'Test', 'layouts/common_layout.php');
 
 
 // *****************************************
