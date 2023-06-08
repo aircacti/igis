@@ -14,6 +14,7 @@ class request
     public $uri;
     public $uri_noslash;
     public $user_ip;
+    public $language;
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class request
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->uri_noslash = substr($this->uri, 1);
         $this->user_ip = $this->getUserIpAddr();
+        $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     }
 
     private function getUserIpAddr()

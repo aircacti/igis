@@ -20,19 +20,3 @@ $pages[] = new page('/admin', 'Admin Login', 'pages/admin.html');
 $pages[] = new page('/test', 'Test', 'layouts/common_layout.php');
 
 
-// *****************************************
-// *****************************************
-//          Helper functions for pages
-// *****************************************
-// *****************************************
-
-
-function findPageByUri($pages, $uri)
-{
-    foreach ($pages as $page) {
-        if ($page->getUri() == $uri) {
-            return $page;
-        }
-    }
-    return null;
-}

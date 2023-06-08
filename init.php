@@ -36,6 +36,12 @@ require_once('handle/throw_error.php');
 // Get the rendering engine
 require_once('handle/render.php');
 
+// Get translations engine
+require_once('handle/translate.php');
+
+// Get find page by uri function
+require_once('handle/findPageByUri.php');
+
 // *****************************************
 // *****************************************
 //             Validate request
@@ -56,7 +62,7 @@ if (isset($redirects[$request->uri])) {
 }
 
 // Check if the requested page exists
-$current_page = findPageByUri($pages, $request->uri);
+$current_page = findPageByUri($request->uri);
 if (!$current_page) {
     echo 'That page not exist' . $current_page;
     exit;

@@ -11,9 +11,10 @@
 
 <body>
 
-    <p> {{ print_r($customVariable); }} </p>
-    <p> {{ print_r($request); }} </p>
-    <p> {{ print_r($config); }} </p>
+    <p> {{ print_r($request->language); }} </p>
+    <p>Ble ble ble {{ echo 'test'; }}</p>
+    <p>{{ translate($request->language, 'Welcome'); }} </p>
+
 </body>
 
 </html>
