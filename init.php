@@ -6,6 +6,9 @@
 // -----------------------------------------
 
 
+$path = __DIR__;
+
+
 // *****************************************
 // *****************************************
 //             Use external
@@ -15,32 +18,32 @@
 
 // Get config
 // $config is available
-require_once('config.php');
+require_once($path . '/config.php');
 
 // Get information about request
 // $request is available
-require_once('handle/request.php');
+require_once($path . '/handle/request.php');
 
 // Get information about existing pages
 // $pages is available
-require_once('pages.php');
+require_once($path . '/pages.php');
 
 // Get information about existing redirects
 // $redirects is available
-require_once('redirects.php');
+require_once($path . '/redirects.php');
 
 // Get helper function to throw errors
 // throw_error($config, code, description) is available
-require_once('handle/throw_error.php');
+require_once($path . '/handle/throw_error.php');
 
-// Get the rendering engine
-require_once('handle/render.php');
+// Get the rendering e/ngine
+require_once($path . '/handle/render.php');
 
-// Get translations engine
-require_once('handle/translate.php');
+// Get translations en/gine
+require_once($path . '/handle/translate.php');
 
-// Get find page by uri function
-require_once('handle/findPageByUri.php');
+// Get find page by ur/i function
+require_once($path . '/handle/findPageByUri.php');
 
 // *****************************************
 // *****************************************

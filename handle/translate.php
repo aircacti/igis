@@ -12,15 +12,15 @@
 function translate($messageKey, $langCode = null)
 {
     // The translation comes from the translations file
-    require_once(__DIR__ . '/../translations.php');
+    require_once($path . '/translations.php');
 
 
     // Get request informations
-    require_once('request.php');
+    require_once($path . '/handle/request.php');
     global $request;
 
     // Get config informations
-    require_once(__DIR__ . '/../config.php');
+    require_once($path . '/config.php');
     global $config;
 
     if ($langCode == null) {
