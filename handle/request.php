@@ -45,6 +45,16 @@ class request
     {
         return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' && isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443';
     }
+
+    private static $instance;
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new request();
+        }
+        return self::$instance;
+    }
 }
 
 
@@ -53,6 +63,3 @@ class request
 //             Put in a variable
 // *****************************************
 // *****************************************
-
-
-$request = new request();

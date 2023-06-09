@@ -8,8 +8,10 @@
 // *****************************************
 
 
-function throw_error($config, $code = 0, $description = null)
+function throw_error($code = 0, $description = null)
 {
+    $config = config::getInstance();
+
     if ($config->debug) {
         echo 'Error ' . $code . ' ' . $description;
     } else {

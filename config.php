@@ -32,14 +32,14 @@ class config
     {
         return $this->httpsRedirect ? "https" : "http";
     }
+
+    private static $instance;
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new config();
+        }
+        return self::$instance;
+    }
 }
-
-
-// *****************************************
-// *****************************************
-//             Put in a variable
-// *****************************************
-// *****************************************
-
-
-$config = new config();

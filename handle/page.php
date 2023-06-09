@@ -14,13 +14,15 @@ class page
     public $uri_no_slash;
     public $title;
     public $content_path;
+    public $layout_path;
 
-    public function __construct($uri, $title, $content_path)
+    public function __construct($uri, $title, $content_path, $layout_path)
     {
         $this->uri = $uri;
         $this->uri_no_slash = substr($uri, 1);
         $this->title = $title;
         $this->content_path = $content_path;
+        $this->layout_path = $layout_path;
     }
 
     public function getUri()
@@ -41,5 +43,10 @@ class page
     public function getContentPath()
     {
         return $this->content_path;
+    }
+
+    public function getLayoutPath()
+    {
+        return $this->layout_path;
     }
 }
