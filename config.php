@@ -24,6 +24,14 @@ class config
 
     // Display the "Missing translation" message when a translation is missing instead of displaying the translation for the main language
     public $missingTranslation = true;
+
+    // Prefer connection via https. Redirect when traffic is not encrypted
+    public $httpsRedirect = false;
+
+    public function getProtocol()
+    {
+        return $this->httpsRedirect ? "https" : "http";
+    }
 }
 
 

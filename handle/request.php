@@ -15,6 +15,7 @@ class request
     public $uri_noslash;
     public $user_ip;
     public $language;
+    public $isHttps;
 
     public function __construct()
     {
@@ -23,6 +24,7 @@ class request
         $this->uri_noslash = substr($this->uri, 1);
         $this->user_ip = $this->getUserIpAddr();
         $this->language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        $this->isHttps = $this->isHttps();
     }
 
     private function getUserIpAddr()
@@ -37,6 +39,11 @@ class request
             // Use the remote address as the client IP
             return $_SERVER['REMOTE_ADDR'];
         }
+    }
+
+    private function isHttps()
+    {
+        return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' && isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443';
     }
 }
 

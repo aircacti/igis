@@ -57,7 +57,13 @@ if ($config->domain != $request->domain) {
 
 // Check if redirection is required
 if (isset($redirects[$request->uri])) {
-    header("Location: http://" . $config->domain . $redirects[$request->uri]);
+    header('Location: ' . $config->getProtocol() . '://' . $config->domain . $redirects[$request->uri]);
+    exit;
+}
+
+// Check if https is preferred
+if ($config->httpsRedirect && !$request->isHttps) {
+    header('Location: https://' . $config->domain . $redirects[$request->uri]);
     exit;
 }
 
