@@ -88,10 +88,5 @@ if (!$pagesManager->contentExists($requestManager->getUri())) {
 
 $current_page = $pagesManager->getPage($requestManager->getUri());
 
-$content = file_get_contents(PATH . $current_page->getContentPath());
-$layout = file_get_contents(PATH . $current_page->getLayoutPath());
-
-$html = str_replace('{{ IGIS_CONTENT }}', $content, $layout);
-
 require_once(PATH . $current_page->getControllerPath());
-show($html);
+echo show($current_page->getContentPath(), $current_page->getLayoutPath());
