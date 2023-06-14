@@ -27,6 +27,19 @@ class config
     // Prefer connection via https. Redirect when traffic is not encrypted
     private $httpsRedirect = false;
 
+    // Enable operations inside double curly brackets
+    private $curlyInView = true;
+
+    // list of allowed operations in curly brackets
+    private $curlyInViewOperations = [
+        'echo', 'translate'
+    ];
+
+    // Allow php code execution inside views. Use with caution
+    private $phpInView = true;
+
+
+
     // *****************************************
     // *****************************************
     //            Available functions
@@ -66,6 +79,21 @@ class config
     public function isHttpsRedirectEnabled()
     {
         return $this->httpsRedirect;
+    }
+
+    public function isCurlyInViewEnabled()
+    {
+        return $this->curlyInView;
+    }
+
+    public function getCurlyInViewOperations()
+    {
+        return $this->curlyInViewOperations;
+    }
+
+    public function isPhpInViewEnabled()
+    {
+        return $this->phpInView;
     }
 
     // *****************************************
