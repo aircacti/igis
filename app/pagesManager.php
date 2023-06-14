@@ -35,9 +35,9 @@ class pagesManager
     }
 
     // Add new page as available
-    public function addPage($uri, $title, $content_path, $layout_path, $controller_path)
+    public function addPage($uri, $content_path, $layout_path, $controller_path)
     {
-        $this->pages[] = new page($uri, $title, $content_path, $layout_path, $controller_path);
+        $this->pages[] = new page($uri, $content_path, $layout_path, $controller_path);
     }
 
     // Check if page exist

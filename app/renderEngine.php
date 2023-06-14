@@ -4,7 +4,7 @@ class renderEngine
 {
     private $bufferFileName;
 
-    public function render($content_path, $layout_path)
+    public function render($content_path, $layout_path, $customVariables)
     {
 
         // Get config settings
@@ -51,6 +51,7 @@ class renderEngine
         $compiled = null;
         try {
             ob_start();
+            extract($customVariables);
             include PATH . '/buffer/' . $this->bufferFileName;
             $compiled = ob_get_clean();
         } catch (\Throwable $e) {

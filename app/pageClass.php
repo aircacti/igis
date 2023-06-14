@@ -19,7 +19,6 @@ class page
 
     private $uri;
     private $uri_no_slash;
-    private $title;
     private $content_path;
     private $layout_path;
     private $controller_path;
@@ -30,13 +29,12 @@ class page
     // *****************************************
     // *****************************************
 
-    public function __construct($uri, $title, $content_path, $layout_path, $controller_path)
+    public function __construct($uri, $content_path, $layout_path, $controller_path)
     {
         $this->uri = $uri;
         $this->uri_no_slash = function () use ($uri) {
             substr($uri, 1);
         };
-        $this->title = $title;
         $this->content_path = $content_path;
         $this->layout_path = $layout_path;
         $this->controller_path = $controller_path;
@@ -56,11 +54,6 @@ class page
     public function getUriNoSlash()
     {
         return $this->uri_no_slash;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     public function getContentPath()

@@ -56,6 +56,11 @@ class config
         return $this->domain;
     }
 
+    public function getPrefixedUrl()
+    {
+        return $this->getProtocol() . '://' . $this->getDomain();
+    }
+
     public function isUriCaseSensitive()
     {
         return $this->uri_case_sensitive;

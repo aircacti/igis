@@ -42,7 +42,6 @@ require_once(PATH . '/settings/pages.php');
 foreach ($pages as $page) {
     $pagesManager->addPage(
         $page['uri'],
-        $page['title'],
         $page['content_path'],
         $page['layout_path'],
         $page['controller_path']
