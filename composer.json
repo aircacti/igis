@@ -1,0 +1,16 @@
+{
+    "name": "aircacti/igis",
+    "description": "Extensible, user-friendly PHP framework.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "aircacti",
+            "email": "igorstec@igorstec.pl"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    }
+}
