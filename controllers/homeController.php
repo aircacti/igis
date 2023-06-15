@@ -7,6 +7,9 @@ function show($content_path, $layout_path)
     require_once(PATH . '/settings/config.php');
     $config = config::getInstance();
 
+    require_once(PATH . '/app/mailManager.php');
+    $mailManager = mailManager::getInstance();
+
     // Calculate time
     $discoveryOfAmerica = new DateTime('1492-10-12');
     $discoveryOfThisSite = new DateTime();
@@ -25,6 +28,22 @@ function show($content_path, $layout_path)
         'intervalOfGreatEvents' => $intervalOfGreatEvents,
         'temperature' => $temperature
     ];
+
+    // $mailManager->sendEmail(
+    //     [
+    //         'sender' => 'a@a.pl',
+    //         'sender_display' => 'a a',
+
+    //         'recipient' => 'b@b.pl',
+    //         'recipient_display' => 'b b',
+
+    //         'subject' => 'c',
+
+    //         'body' => '<h1>D</h1>',
+    //         'alt_body' => 'E'
+    //     ]
+    // );
+
 
     return $renderEngine->render($content_path, $layout_path, $customVariables);
 }

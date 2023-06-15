@@ -38,6 +38,21 @@ class config
     // Allow php code execution inside views. Use with caution
     private $phpInView = true;
 
+    // Mailing settings
+    private $mailDebug = 0; // Debug level for email sending
+    private $mailHost = "x.com"; // SMTP host
+    private $mailUsername = "x@x.com"; // SMTP username
+    private $mailPassword = 'xx'; // SMTP password
+    private $mailSMTPSecure = "tls"; // SMTP encryption method
+    private $mailSMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        )
+    ); // SMTP options
+    private $mailPort = 587; // SMTP port
+
 
 
     // *****************************************
@@ -100,6 +115,42 @@ class config
     {
         return $this->phpInView;
     }
+
+    public function getMailDebug()
+    {
+        return $this->mailDebug;
+    }
+
+    public function getMailHost()
+    {
+        return $this->mailHost;
+    }
+
+    public function getMailUsername()
+    {
+        return $this->mailUsername;
+    }
+
+    public function getMailPassword()
+    {
+        return $this->mailPassword;
+    }
+
+    public function getMailSMTPSecure()
+    {
+        return $this->mailSMTPSecure;
+    }
+
+    public function getMailSMTPOptions()
+    {
+        return $this->mailSMTPOptions;
+    }
+
+    public function getMailPort()
+    {
+        return $this->mailPort;
+    }
+
 
     // *****************************************
     // *****************************************

@@ -31,6 +31,8 @@ $errorsManager = errorsManager::getInstance();
 require_once(PATH . '/app/translationsManager.php');
 $translationsManager = translationsManager::getInstance();
 
+require_once(PATH . '/vendor/autoload.php');
+
 // *****************************************
 // *****************************************
 //           Create available pages
