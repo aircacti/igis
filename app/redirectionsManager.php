@@ -12,7 +12,7 @@ class redirectionsManager
     // *****************************************
     // *****************************************
 
-    // get all redirects
+    // Get all redirects
     public function getRedirections()
     {
         // Include the file containing the redirection settings

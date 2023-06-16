@@ -1,7 +1,5 @@
 <?php
 
-namespace Settings;
-
 $pages = [
     [
         'uri' => '/',

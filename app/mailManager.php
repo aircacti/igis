@@ -3,6 +3,8 @@
 namespace App;
 
 use PHPMailer\PHPMailer\PHPMailer;
+use Settings\config;
+use App\errorsManager;
 
 class mailManager
 {
@@ -19,11 +21,9 @@ class mailManager
         require_once PATH . "/vendor/autoload.php";
 
         // Get config settings
-        require_once PATH . '/settings/config.php';
         $config = config::getInstance();
 
         // Get errors manager
-        require_once PATH . '/app/errorsManager.php';
         $errorsManager = errorsManager::getInstance();
 
         // Create a new instance of PHPMailer

@@ -2,12 +2,14 @@
 
 // *****************************************
 // *****************************************
-//             Page redirects
+//             Translations
 // *****************************************
 // *****************************************
 
-
-$redirections = [
-    // Redirect '/home' to '/'
-    '/home' => '/'
+// Application language as the parent array
+$translations = [
+    'Hello' => [
+        'de-DE' => 'Hallo',
+        'fr-FR' => 'Bonjour'
+    ]
 ];
