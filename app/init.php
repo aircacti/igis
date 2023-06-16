@@ -56,26 +56,30 @@ foreach ($pages as $page) {
 // *****************************************
 // *****************************************
 
+// Check if the requested domain matches the configured domain
 if ($config->getDomain() != $requestManager->getDomain()) {
     $errorsManager->throw(0, 'Domain error');
     exit;
 }
 
+// Check if a redirection exists for the requested URI
 if ($redirectionsManager->exists($requestManager->getUri())) {
     header('Location: ' . $config->getProtocol() . '://' . $config->getDomain() . $redirectionsManager->getRedirection($requestManager->getUri()));
     exit;
 }
 
-
+// Redirect to the same URI using HTTPS if HTTPS is enabled 
 if (!$requestManager->isHttps() && $config->isHttpsRedirectEnabled()) {
     header('Location: ' . $config->getProtocol() . '://' . $config->getDomain() . $requestManager->getUri());
     exit;
 }
 
+// Check if the requested URI exists
 if (!$pagesManager->exists($requestManager->getUri())) {
     $errorsManager->throw(1, "That page not exists");
 }
 
+// Check if the content for the requested URI exists
 if (!$pagesManager->contentExists($requestManager->getUri())) {
     $errorsManager->throw(2, "Content of that page doesnt exist");
 }
@@ -87,7 +91,11 @@ if (!$pagesManager->contentExists($requestManager->getUri())) {
 // *****************************************
 // *****************************************
 
+// Get the current page from the pages manager
 $current_page = $pagesManager->getPage($requestManager->getUri());
 
+// Get controller for requested URI
 require_once(PATH . $current_page->getControllerPath());
+
+// Display page via controller
 echo show($current_page->getContentPath(), $current_page->getLayoutPath());

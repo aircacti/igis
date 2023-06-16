@@ -9,6 +9,7 @@ class errorsManager
     // *****************************************
     // *****************************************
 
+    // This function echoes an error code and description, and terminates script execution.
     public function throw($code = 0, $description = null)
     {
         echo 'Error ' . $code . ' ' . $description;

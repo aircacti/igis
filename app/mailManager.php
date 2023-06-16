@@ -55,6 +55,15 @@ class mailManager
         }
     }
 
+    public function getPHPMailer() {
+
+        // Composer autoload
+        require_once PATH . "/vendor/autoload.php";
+
+        // Return real PHPMailer in case on need
+        return new PHPMailer();
+    }
+
 
     // *****************************************
     // *****************************************

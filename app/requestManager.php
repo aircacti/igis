@@ -25,14 +25,18 @@ class requestManager
 
     public function __construct()
     {
+        // Get the domain from the HTTP_HOST server variable
         $this->domain = $_SERVER['HTTP_HOST'];
 
+        // Get the URI from the REQUEST_URI server variable
         $this->uri = $_SERVER['REQUEST_URI'];
 
+        // Get the URI without the leading slash
         $this->uri_noslash = function () {
             return substr($_SERVER['REQUEST_URI'], 1);
         };
 
+        // Get the user's IP address
         $this->user_ip = function () {
             if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 return $_SERVER['HTTP_CLIENT_IP'];
@@ -43,14 +47,17 @@ class requestManager
             }
         };
 
+        // Get the language from the ACCEPT_LANGUAGE server variable
         $this->language = function () {
             substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         };
 
+        // Check if the request is using HTTPS
         $this->isHttps = function () {
             return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' && isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] === '443';
         };
     }
+
 
     // *****************************************
     // *****************************************

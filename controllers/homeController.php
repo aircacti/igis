@@ -1,12 +1,15 @@
 <?php
 function show($content_path, $layout_path)
 {
+    // Get render engine
     require(PATH . '/app/renderEngine.php');
     $renderEngine = renderEngine::getInstance();
 
+    // Get config settings
     require_once(PATH . '/settings/config.php');
     $config = config::getInstance();
 
+    // Get mail manager
     require_once(PATH . '/app/mailManager.php');
     $mailManager = mailManager::getInstance();
 
@@ -44,21 +47,32 @@ function show($content_path, $layout_path)
     //     ]
     // );
 
-
+    // Return compiled view
     return $renderEngine->render($content_path, $layout_path, $customVariables);
 }
 
 function getTemperature()
 {
+    // API URL for retrieving temperature data
     $url = "https://api.open-meteo.com/v1/forecast?latitude=24.05&longitude=-74.49&hourly=temperature_2m&forecast_days=1";
+
+    // Retrieve JSON data from the API URL
     $json = file_get_contents($url);
+
+    // Decode the JSON data into an associative array
     $data = json_decode($json, true);
+
+    // Check if the data is successfully decoded
     if ($data == null) {
         return false;
     }
 
+    // Get the current date and time in the required format
     $currentDateTime = date('Y-m-d\TH:00');
+
+    // Find the index of the current date and time in the time array
     $index = array_search($currentDateTime, $data['hourly']['time']);
 
+    // Return the temperature value for the corresponding index
     return $data['hourly']['temperature_2m'][$index];
 }

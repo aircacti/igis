@@ -2,6 +2,8 @@
 
 class renderEngine
 {
+
+    // Create a property with the name of the view being processed
     private $bufferFileName;
 
     public function render($content_path, $layout_path, $customVariables)
@@ -42,24 +44,36 @@ class renderEngine
             }
         }
 
+        // Check if curly brackets functionality is enabled
         if ($config->isCurlyInViewEnabled()) {
             $raw = $this->prepareCurly($raw);
             $this->modifyBufferFile($raw);
         }
 
 
+        // Process the view
         $compiled = null;
         try {
+            // Start processing
             ob_start();
+
+            // Share custom variables
             extract($customVariables);
+
+            // Include the view buffer
             include PATH . '/buffer/' . $this->bufferFileName;
+
+            // Finish processing
             $compiled = ob_get_clean();
         } catch (\Throwable $e) {
             $this->removeBufferFile();
             $errorsManager->throw(4, "Error while rendering the page. Here is additional information: " . $e);
         }
 
+        // Delete the created buffer file
         $this->removeBufferFile();
+
+        // Return the processed view
         return $compiled;
     }
 
@@ -69,6 +83,7 @@ class renderEngine
         require_once(PATH . '/app/errorsManager.php');
         $errorsManager = errorsManager::getInstance();
 
+        // Create buffer file
         if (!touch(PATH . '/buffer/' . $this->bufferFileName)) {
             $errorsManager->throw(7, "Error on touch");
         }
@@ -80,6 +95,7 @@ class renderEngine
         require_once(PATH . '/app/errorsManager.php');
         $errorsManager = errorsManager::getInstance();
 
+        // Modify buffer file
         if (!file_put_contents(PATH . '/buffer/' . $this->bufferFileName, $raw)) {
             $errorsManager->throw(8, "Error on file_put_contents");
         }
@@ -91,6 +107,7 @@ class renderEngine
         require_once(PATH . '/app/errorsManager.php');
         $errorsManager = errorsManager::getInstance();
 
+        // Delete buffer file
         if (!unlink(PATH . '/buffer/' . $this->bufferFileName)) {
             $errorsManager->throw(9, "Error on unlink");
         }
@@ -98,6 +115,7 @@ class renderEngine
 
     private function prepareInLayout($rawContent, $rawLayout)
     {
+        // Put the content in the layout
         $result = str_replace('{{ IGIS_CONTENT }}', $rawContent, $rawLayout);
         return $result;
     }
@@ -113,11 +131,17 @@ class renderEngine
             function ($matches) use ($errorsManager) {
                 $code = trim($matches[1]);
 
+                // Check if the code starts with 'echo '
                 if (strpos($code, 'echo ') === 0) {
+                    // Return PHP code that echoes the content
                     return '<?php ' . $code . ' ?>';
-                } elseif (strpos($code, 'translate(') === 0) {
+                }
+                // Check if the code starts with 'translate('
+                elseif (strpos($code, 'translate(') === 0) {
+                    // Return PHP code for translation function
                     return '<?php ' . $code . ' ?>';
                 } else {
+                    // Remove the buffer file and throw an error for illegal operation in curly brackets
                     $this->removeBufferFile();
                     $errorsManager->throw(10, "Illegal operation in curly brackets: " . htmlspecialchars($code));
                 }
@@ -125,10 +149,15 @@ class renderEngine
             $raw
         );
 
+        // Return compiled result
         return $result;
     }
 
-
+    // *****************************************
+    // *****************************************
+    //           Singleton declaration
+    // *****************************************
+    // *****************************************
 
     private static $instance;
 

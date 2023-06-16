@@ -8,5 +8,6 @@
 
 
 $redirections = [
+    // Redirect '/home' to '/'
     '/home' => '/'
 ];
