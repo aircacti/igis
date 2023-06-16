@@ -1,5 +1,10 @@
 <?php
 
+namespace App;
+
+use App\errorsManager;
+use Settings\config;
+
 class renderEngine
 {
 
@@ -10,11 +15,9 @@ class renderEngine
     {
 
         // Get config settings
-        require_once(PATH . '/settings/config.php');
         $config = config::getInstance();
 
         // Get errors manager
-        require_once(PATH . '/app/errorsManager.php');
         $errorsManager = errorsManager::getInstance();
 
         // Get the contents of the views

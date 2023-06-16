@@ -1,5 +1,15 @@
 <?php
 
+require_once PATH . '/vendor/autoload.php';
+
+use Settings\config;
+use App\requestManager;
+use App\pagesManager;
+use App\redirectionsManager;
+use App\errorsManager;
+use App\translationsManager;
+use Controllers\homeController;
+
 // -----------------------------------------
 //    All application logic initialization
 // -----------------------------------------
@@ -11,24 +21,20 @@
 // *****************************************
 // *****************************************
 
-require_once(PATH . '/settings/config.php');
+
 $config = config::getInstance();
 
-require_once(PATH . '/app/requestManager.php');
+
 $requestManager = requestManager::getInstance();
 
-require_once(PATH . '/app/pagesManager.php');
 $pagesManager = pagesManager::getInstance();
 
 require_once(PATH . '/app/pageClass.php');
 
-require_once(PATH . '/app/redirectionsManager.php');
 $redirectionsManager = redirectionsManager::getInstance();
 
-require_once(PATH . '/app/errorsManager.php');
 $errorsManager = errorsManager::getInstance();
 
-require_once(PATH . '/app/translationsManager.php');
 $translationsManager = translationsManager::getInstance();
 
 require_once(PATH . '/vendor/autoload.php');
@@ -91,11 +97,20 @@ if (!$pagesManager->contentExists($requestManager->getUri())) {
 // *****************************************
 // *****************************************
 
+
 // Get the current page from the pages manager
 $current_page = $pagesManager->getPage($requestManager->getUri());
 
-// Get controller for requested URI
-require_once(PATH . $current_page->getControllerPath());
+$controllerClass = 'Controllers\\' . $current_page->getControllerName();
 
-// Display page via controller
-echo show($current_page->getContentPath(), $current_page->getLayoutPath());
+if (!class_exists($controllerClass)) {
+    $errorsManager->throw(12, 'Controller class not found.');
+}
+
+$controller = new $controllerClass();
+
+if (!method_exists($controller, 'show')) {
+    $errorsManager->throw(11, 'No show method in controller');
+}
+
+echo $controller->show($current_page->getContentPath(), $current_page->getLayoutPath());

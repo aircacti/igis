@@ -1,6 +1,13 @@
 {
     "name": "aircacti/igis",
     "description": "Extensible, user-friendly PHP framework.",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Settings\\": "settings/",
+            "Controllers\\": "controllers/"
+        }
+    },
     "type": "project",
     "license": "MIT",
     "authors": [

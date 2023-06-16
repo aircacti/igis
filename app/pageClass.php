@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 
 // *****************************************
 // *****************************************
@@ -69,5 +70,12 @@ class page
     public function getControllerPath()
     {
         return $this->controller_path;
+    }
+
+    public function getControllerName()
+    {
+        $fileName = basename($this->getControllerPath());
+        $controllerName = pathinfo($fileName, PATHINFO_FILENAME);
+        return $controllerName;
     }
 }

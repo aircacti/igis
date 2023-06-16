@@ -1,5 +1,7 @@
 <?php
 
+namespace Settings;
+
 class config
 {
 

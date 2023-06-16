@@ -1,78 +1,104 @@
 <?php
-function show($content_path, $layout_path)
+
+namespace Controllers;
+
+use App\renderEngine;
+use Settings\config;
+use App\mailManager;
+
+class homeController
 {
-    // Get render engine
-    require(PATH . '/app/renderEngine.php');
-    $renderEngine = renderEngine::getInstance();
 
-    // Get config settings
-    require_once(PATH . '/settings/config.php');
-    $config = config::getInstance();
+    public function show($content_path, $layout_path)
+    {
 
-    // Get mail manager
-    require_once(PATH . '/app/mailManager.php');
-    $mailManager = mailManager::getInstance();
+        // Get render engine
+        $renderEngine = renderEngine::getInstance();
 
-    // Calculate time
-    $discoveryOfAmerica = new DateTime('1492-10-12');
-    $discoveryOfThisSite = new DateTime();
-    $intervalOfGreatEvents = $discoveryOfAmerica->diff($discoveryOfThisSite);
-    $intervalOfGreatEvents = $intervalOfGreatEvents->format('%y years, %m months, %d days, %h hours, %i minutes, %s seconds');
+        // Get config settings
+        $config = config::getInstance();
 
-    // Get weather
-    $temperature = getTemperature();
-    if (!$temperature) {
-        $temperature = "(API Error)";
+        // Get mail manager
+        $mailManager = mailManager::getInstance();
+
+        // Calculate time
+        $discoveryOfAmerica = new \DateTime('1492-10-12');
+        $discoveryOfThisSite = new \DateTime();
+        $intervalOfGreatEvents = $discoveryOfAmerica->diff($discoveryOfThisSite);
+        $intervalOfGreatEvents = $intervalOfGreatEvents->format('%y years, %m months, %d days, %h hours, %i minutes, %s seconds');
+
+        // Get weather
+        $temperature = $this->getTemperature();
+        if (!$temperature) {
+            $temperature = "(API Error)";
+        }
+
+        $customVariables = [
+            'url' => $config->getPrefixedUrl(),
+            'pageTitle' => "Welcome page!",
+            'intervalOfGreatEvents' => $intervalOfGreatEvents,
+            'temperature' => $temperature
+        ];
+
+        // $mailManager->sendEmail(
+        //     [
+        //         'sender' => 'a@a.pl',
+        //         'sender_display' => 'a a',
+
+        //         'recipient' => 'b@b.pl',
+        //         'recipient_display' => 'b b',
+
+        //         'subject' => 'c',
+
+        //         'body' => '<h1>D</h1>',
+        //         'alt_body' => 'E'
+        //     ]
+        // );
+
+        // Return compiled view
+        return $renderEngine->render($content_path, $layout_path, $customVariables);
     }
 
-    $customVariables = [
-        'url' => $config->getPrefixedUrl(),
-        'pageTitle' => "Welcome page!",
-        'intervalOfGreatEvents' => $intervalOfGreatEvents,
-        'temperature' => $temperature
-    ];
+    private function getTemperature()
+    {
+        // API URL for retrieving temperature data
+        $url = "https://api.open-meteo.com/v1/forecast?latitude=24.05&longitude=-74.49&hourly=temperature_2m&forecast_days=1";
 
-    // $mailManager->sendEmail(
-    //     [
-    //         'sender' => 'a@a.pl',
-    //         'sender_display' => 'a a',
+        // Retrieve JSON data from the API URL
+        $json = file_get_contents($url);
 
-    //         'recipient' => 'b@b.pl',
-    //         'recipient_display' => 'b b',
+        // Decode the JSON data into an associative array
+        $data = json_decode($json, true);
 
-    //         'subject' => 'c',
+        // Check if the data is successfully decoded
+        if ($data == null) {
+            return false;
+        }
 
-    //         'body' => '<h1>D</h1>',
-    //         'alt_body' => 'E'
-    //     ]
-    // );
+        // Get the current date and time in the required format
+        $currentDateTime = date('Y-m-d\TH:00');
 
-    // Return compiled view
-    return $renderEngine->render($content_path, $layout_path, $customVariables);
-}
+        // Find the index of the current date and time in the time array
+        $index = array_search($currentDateTime, $data['hourly']['time']);
 
-function getTemperature()
-{
-    // API URL for retrieving temperature data
-    $url = "https://api.open-meteo.com/v1/forecast?latitude=24.05&longitude=-74.49&hourly=temperature_2m&forecast_days=1";
-
-    // Retrieve JSON data from the API URL
-    $json = file_get_contents($url);
-
-    // Decode the JSON data into an associative array
-    $data = json_decode($json, true);
-
-    // Check if the data is successfully decoded
-    if ($data == null) {
-        return false;
+        // Return the temperature value for the corresponding index
+        return $data['hourly']['temperature_2m'][$index];
     }
 
-    // Get the current date and time in the required format
-    $currentDateTime = date('Y-m-d\TH:00');
 
-    // Find the index of the current date and time in the time array
-    $index = array_search($currentDateTime, $data['hourly']['time']);
+    // *****************************************
+    //           Singleton declaration
+    // *****************************************
+    // *****************************************
 
-    // Return the temperature value for the corresponding index
-    return $data['hourly']['temperature_2m'][$index];
+
+    private static $instance;
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new homeController();
+        }
+        return self::$instance;
+    }
 }
