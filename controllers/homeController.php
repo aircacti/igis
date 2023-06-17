@@ -5,6 +5,7 @@ namespace Controllers;
 use App\renderEngine;
 use Settings\config;
 use App\mailManager;
+use App\modelsManager;
 
 class homeController
 {
@@ -21,6 +22,9 @@ class homeController
         // Get mail manager
         $mailManager = mailManager::getInstance();
 
+        // Get models manager
+        $modelsManager = modelsManager::getInstance();
+
         // Calculate time
         $discoveryOfAmerica = new \DateTime('1492-10-12');
         $discoveryOfThisSite = new \DateTime();
@@ -33,12 +37,6 @@ class homeController
             $temperature = "(API Error)";
         }
 
-        $customVariables = [
-            'url' => $config->getPrefixedUrl(),
-            'pageTitle' => "Welcome page!",
-            'intervalOfGreatEvents' => $intervalOfGreatEvents,
-            'temperature' => $temperature
-        ];
 
         // $mailManager->sendEmail(
         //     [
@@ -54,6 +52,17 @@ class homeController
         //         'alt_body' => 'E'
         //     ]
         // );
+
+        // Get country model
+        $countriesModel = $modelsManager->getModel('countriesModel');
+
+        $customVariables = [
+            'url' => $config->getPrefixedUrl(),
+            'pageTitle' => "Welcome page!",
+            'intervalOfGreatEvents' => $intervalOfGreatEvents,
+            'temperature' => $temperature,
+            'bahamasPopulation' => $countriesModel->getCountryPopulation('USA')
+        ];
 
         // Return compiled view
         return $renderEngine->render($content_path, $layout_path, $customVariables);

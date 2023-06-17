@@ -5,6 +5,7 @@
             <h4>Examples of framework capabilities</h4>
             <p>It took {{ echo $intervalOfGreatEvents }} from the discovery of America</p>
             <p>The discoverer's first steps were probably on the island of San Salvador. At the moment, the temperature on the island is {{ echo $temperature }}&deg;C</p>
+            <p>Contrary to its name, San Salvador Island is not a territory of El Salvador. Instead, this island is located in the Bahamas, a country boasting a population of approximately {{ echo $bahamasPopulation }} people.</p>
         </div>
     </div>
 </div>

@@ -56,6 +56,13 @@ class config
     private $mailPort = 587; // SMTP port
 
 
+    // Database settings
+    private $dbName = 'igisDatabase';
+    private $user = 'root';
+    private $password = '';
+    private $host = 'localhost';
+    private $port = 3306;
+
 
     // *****************************************
     // *****************************************
@@ -151,6 +158,31 @@ class config
     public function getMailPort()
     {
         return $this->mailPort;
+    }
+
+    public function getDbName()
+    {
+        return $this->dbName;
+    }
+
+    public function getDbUser()
+    {
+        return $this->user;
+    }
+
+    public function getDbPassword()
+    {
+        return $this->password;
+    }
+
+    public function getDbHost()
+    {
+        return $this->host;
+    }
+
+    public function getDbPort()
+    {
+        return $this->port;
     }
 
 

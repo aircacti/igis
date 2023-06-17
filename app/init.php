@@ -8,7 +8,6 @@ use App\pagesManager;
 use App\redirectionsManager;
 use App\errorsManager;
 use App\translationsManager;
-use Controllers\homeController;
 
 // -----------------------------------------
 //    All application logic initialization
@@ -23,7 +22,6 @@ use Controllers\homeController;
 
 
 $config = config::getInstance();
-
 
 $requestManager = requestManager::getInstance();
 
