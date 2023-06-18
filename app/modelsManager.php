@@ -5,6 +5,8 @@ namespace App;
 use Settings\config;
 use App\errorsManager;
 use \DB;
+use Exception;
+use MeekroDBException;
 
 class modelsManager
 {
@@ -19,27 +21,22 @@ class modelsManager
     public function __construct()
     {
         $this->configureConnection();
-        
     }
 
     public function configureConnection()
     {
+        // Get config settings
         $config = config::getInstance();
 
         DB::$user = $config->getDbUser();
         DB::$password = $config->getDbPassword();
         DB::$dbName = $config->getDbName();
-    }
-    
-    public function checkModelsTablesAccurate() {
-        // to do
+
     }
 
-    public function checkConnectionStatus() {
-        // to do
-    }
 
-    public function getModel($modelName) {
+    public function getModel($modelName)
+    {
 
         // Get errors manager
         $errorsManager = errorsManager::getInstance();
@@ -53,9 +50,18 @@ class modelsManager
         $model = new $modelClass();
 
         return $model;
-
     }
 
+    public function modelExists($modelName)
+    {
+
+        // Get errors manager
+        $errorsManager = errorsManager::getInstance();
+
+        $modelClass = 'Models\\' . $modelName;
+
+        return class_exists($modelClass);
+    }
 
     // *****************************************
     // *****************************************

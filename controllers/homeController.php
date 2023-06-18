@@ -37,7 +37,6 @@ class homeController
             $temperature = "(API Error)";
         }
 
-
         // $mailManager->sendEmail(
         //     [
         //         'sender' => 'a@a.pl',
@@ -56,6 +55,7 @@ class homeController
         // Get country model
         $countriesModel = $modelsManager->getModel('countriesModel');
 
+        // Variables to be passed to the view
         $customVariables = [
             'url' => $config->getPrefixedUrl(),
             'pageTitle' => "Welcome page!",
