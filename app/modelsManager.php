@@ -5,8 +5,6 @@ namespace App;
 use Settings\config;
 use App\errorsManager;
 use \DB;
-use Exception;
-use MeekroDBException;
 
 class modelsManager
 {
@@ -31,7 +29,6 @@ class modelsManager
         DB::$user = $config->getDbUser();
         DB::$password = $config->getDbPassword();
         DB::$dbName = $config->getDbName();
-
     }
 
 

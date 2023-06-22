@@ -8,6 +8,7 @@ use App\pagesManager;
 use App\redirectionsManager;
 use App\errorsManager;
 use App\translationsManager;
+use App\middlewareManager;
 
 // -----------------------------------------
 //    All application logic initialization
@@ -50,7 +51,8 @@ foreach ($pages as $page) {
         $page['uri'],
         $page['content_path'],
         $page['layout_path'],
-        $page['controller_path']
+        $page['controller_path'],
+        $page['middleware']
     );
 }
 
@@ -91,13 +93,33 @@ if (!$pagesManager->contentExists($requestManager->getUri())) {
 
 // *****************************************
 // *****************************************
-//             Generate page
+//             Page object
 // *****************************************
 // *****************************************
 
 
 // Get the current page from the pages manager
 $current_page = $pagesManager->getPage($requestManager->getUri());
+
+
+// *****************************************
+// *****************************************
+//             Middleware
+// *****************************************
+// *****************************************
+
+
+$middlewareManager = middlewareManager::getInstance();
+$middlewareManager->loadMiddleware($current_page->getMiddleware());
+
+
+
+// *****************************************
+// *****************************************
+//             Generate page
+// *****************************************
+// *****************************************
+
 
 $controllerClass = 'Controllers\\' . $current_page->getControllerName();
 

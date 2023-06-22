@@ -5,7 +5,6 @@ namespace Models;
 use \DB;
 use App\errorsManager;
 use Exception;
-use MeekroDBException;
 
 class countriesModel {
 

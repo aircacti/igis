@@ -6,7 +6,8 @@
             "App\\": "app/",
             "Settings\\": "settings/",
             "Controllers\\": "controllers/",
-            "Models\\": "models/"
+            "Models\\": "models/",
+            "Middleware\\": "middleware/"
         }
     },
     "type": "project",

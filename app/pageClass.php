@@ -23,6 +23,7 @@ class page
     private $content_path;
     private $layout_path;
     private $controller_path;
+    private $middleware;
 
     // *****************************************
     // *****************************************
@@ -30,7 +31,7 @@ class page
     // *****************************************
     // *****************************************
 
-    public function __construct($uri, $content_path, $layout_path, $controller_path)
+    public function __construct($uri, $content_path, $layout_path, $controller_path, $middleware)
     {
         $this->uri = $uri;
         $this->uri_no_slash = function () use ($uri) {
@@ -39,6 +40,7 @@ class page
         $this->content_path = $content_path;
         $this->layout_path = $layout_path;
         $this->controller_path = $controller_path;
+        $this->middleware = $middleware;
     }
 
     // *****************************************
@@ -77,5 +79,10 @@ class page
         $fileName = basename($this->getControllerPath());
         $controllerName = pathinfo($fileName, PATHINFO_FILENAME);
         return $controllerName;
+    }
+
+    public function getMiddleware()
+    {
+        return $this->middleware;
     }
 }

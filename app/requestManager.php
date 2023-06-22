@@ -39,15 +39,13 @@ class requestManager
         };
 
         // Get the user's IP address
-        $this->user_ip = function () {
-            if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-                return $_SERVER['HTTP_CLIENT_IP'];
-            } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                return $_SERVER['HTTP_X_FORWARDED_FOR'];
-            } else {
-                return $_SERVER['REMOTE_ADDR'];
-            }
-        };
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $this->user_ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $this->user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $this->user_ip = $_SERVER['REMOTE_ADDR'];
+        }
 
         // Get the language from the ACCEPT_LANGUAGE server variable
         $this->language = function () {
