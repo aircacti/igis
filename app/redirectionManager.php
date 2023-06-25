@@ -2,7 +2,7 @@
 
 namespace App;
 
-class redirectionsManager
+class redirectionManager
 {
 
 
@@ -59,7 +59,7 @@ class redirectionsManager
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new redirectionsManager();
+            self::$instance = new redirectionManager();
         }
         return self::$instance;
     }

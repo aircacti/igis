@@ -4,7 +4,7 @@ namespace App;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use Settings\config;
-use App\errorsManager;
+use App\exceptionManager;
 
 class mailManager
 {
@@ -24,7 +24,7 @@ class mailManager
         $config = config::getInstance();
 
         // Get errors manager
-        $errorsManager = errorsManager::getInstance();
+        $exceptionManager = exceptionManager::getInstance();
 
         // Create a new instance of PHPMailer
         $mail = new PHPMailer();
@@ -53,11 +53,12 @@ class mailManager
         // Send the email and handle errors if any
         if (!$mail->send()) {
             $errorMessage = 'Mail sending error: ' . $mail->ErrorInfo;
-            $errorsManager->throw(10, $errorMessage);
+            $exceptionManager->throw(10, $errorMessage);
         }
     }
 
-    public function getPHPMailer() {
+    public function getPHPMailer()
+    {
 
         // Composer autoload
         require_once PATH . "/vendor/autoload.php";

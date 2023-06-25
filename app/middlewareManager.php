@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\errorsManager;
+use App\exceptionManager;
 
 class middlewareManager
 {
@@ -24,12 +24,12 @@ class middlewareManager
     public function getMiddleware($middlewareName)
     {
         // Get errors manager
-        $errorsManager = errorsManager::getInstance();
+        $exceptionManager = exceptionManager::getInstance();
 
         $middlewareClass = 'Middleware\\' . $middlewareName;
 
         if (!class_exists($middlewareClass)) {
-            $errorsManager->throw(555, 'Middleware class not found.');
+            $exceptionManager->throw(555, 'Middleware class not found.');
         }
 
         $middleware = new $middlewareClass();

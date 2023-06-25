@@ -1,0 +1,62 @@
+{
+  "6000": {
+    "shortDescription": "Invalid domain",
+    "longDescription": "Domain in $_SERVER['HTTP_HOST'] is not the same as $domain in settings/config.php"
+  },
+  "6001": {
+    "shortDescription": "Page does not exist",
+    "longDescription": "No 'url' was found in settings/pages.php that matches the request"
+  },
+  "6002": {
+    "shortDescription": "There is no content for the page",
+    "longDescription": "The file specified by 'content path' in settings/pages.php was not found or the file is empty"
+  },
+  "6003": {
+    "shortDescription": "No controller for this request",
+    "longDescription": "No controller found for this request in settings/pages.php in namespace 'Controllers'"
+  },
+  "6004": {
+    "shortDescription": "There is no show method",
+    "longDescription": "The controller for this request does not have a show() method"
+  },
+  "6005": {
+    "shortDescription": "Model not found",
+    "longDescription": "Model class not found in namespace 'Model'"
+  },
+  "6006": {
+    "shortDescription": "Could not get page content file",
+    "longDescription": "An error occurred while receiving page content from a file"
+  },
+  "6007": {
+    "shortDescription": "Could not get page layout file",
+    "longDescription": "An error occurred while receiving page layout from a file"
+  },
+  "6008": {
+    "shortDescription": "Php is not allowed",
+    "longDescription": "The ability to use pure php inside views has been disabled in the configuration file"
+  },
+  "6009": {
+    "shortDescription": "Page view failed to render",
+    "longDescription": "An unknown error occurred while rendering the page view"
+  },
+  "6010": {
+    "shortDescription": "Failed to create buffer file",
+    "longDescription": "Failed to create buffer file using touch"
+  },
+  "6011": {
+    "shortDescription": "Failed to modify buffer file",
+    "longDescription": "Failed to modify buffer file using file_put_contents"
+  },
+  "6012": {
+    "shortDescription": "Buffer file could not be deleted",
+    "longDescription": "Failed to delete buffer file using unlink. This problem may result in filling up the entire disk space"
+  },
+  "6013": {
+    "shortDescription": "Illegal operation in curly brackets",
+    "longDescription": "The curly brackets in the view used an operation that is not defined as allowed in settings/config.php"
+  },
+  "6014": {
+    "shortDescription": "No error code",
+    "longDescription": "Failed to retrieve error code"
+  }
+}

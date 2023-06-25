@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\errorsManager;
+use App\exceptionManager;
 use Settings\config;
 
 class renderEngine
@@ -18,17 +18,17 @@ class renderEngine
         $config = config::getInstance();
 
         // Get errors manager
-        $errorsManager = errorsManager::getInstance();
+        $exceptionManager = exceptionManager::getInstance();
 
         // Get the contents of the views
         $rawContent = file_get_contents(PATH . $content_path);
         if (!$rawContent) {
-            $errorsManager->throw(5, "Error on file_get_contents");
+            $exceptionManager->throw(6006, "Could not get page content file");
         }
 
         $rawLayout = file_get_contents(PATH . $layout_path);
         if (!$rawLayout) {
-            $errorsManager->throw(6, "Error on file_get_contents");
+            $exceptionManager->throw(6007, "Could not get page layout file");
         }
 
         // Create a buffer file
@@ -43,7 +43,7 @@ class renderEngine
         if (!$config->isPhpInViewEnabled()) {
             if (preg_match('/<\?php|<\?/i', $raw)) {
                 $this->removeBufferFile();
-                $errorsManager->throw(3, "Php is disabled in the view");
+                $exceptionManager->throw(6008, "Php is not allowed");
             }
         }
 
@@ -70,7 +70,7 @@ class renderEngine
             $compiled = ob_get_clean();
         } catch (\Throwable $e) {
             $this->removeBufferFile();
-            $errorsManager->throw(4, "Error while rendering the page. Here is additional information: " . $e);
+            $exceptionManager->throw(6009, "Page view failed to render:" . $e);
         }
 
         // Delete the created buffer file
@@ -83,36 +83,36 @@ class renderEngine
     private function createBufferFile()
     {
         // Get errors manager
-        require_once(PATH . '/app/errorsManager.php');
-        $errorsManager = errorsManager::getInstance();
+        require_once(PATH . '/app/exceptionManager.php');
+        $exceptionManager = exceptionManager::getInstance();
 
         // Create buffer file
         if (!touch(PATH . '/buffer/' . $this->bufferFileName)) {
-            $errorsManager->throw(7, "Error on touch");
+            $exceptionManager->throw(6010, "Failed to create buffer file");
         }
     }
 
     private function modifyBufferFile($raw)
     {
         // Get errors manager
-        require_once(PATH . '/app/errorsManager.php');
-        $errorsManager = errorsManager::getInstance();
+        require_once(PATH . '/app/exceptionManager.php');
+        $exceptionManager = exceptionManager::getInstance();
 
         // Modify buffer file
         if (!file_put_contents(PATH . '/buffer/' . $this->bufferFileName, $raw)) {
-            $errorsManager->throw(8, "Error on file_put_contents");
+            $exceptionManager->throw(6011, "Failed to modify buffer file");
         }
     }
 
     private function removeBufferFile()
     {
         // Get errors manager
-        require_once(PATH . '/app/errorsManager.php');
-        $errorsManager = errorsManager::getInstance();
+        require_once(PATH . '/app/exceptionManager.php');
+        $exceptionManager = exceptionManager::getInstance();
 
         // Delete buffer file
         if (!unlink(PATH . '/buffer/' . $this->bufferFileName)) {
-            $errorsManager->throw(9, "Error on unlink");
+            $exceptionManager->throw(6012, "Buffer file could not be deleted");
         }
     }
 
@@ -126,12 +126,12 @@ class renderEngine
     private function prepareCurly($raw)
     {
         // Get errors manager
-        require_once(PATH . '/app/errorsManager.php');
-        $errorsManager = errorsManager::getInstance();
+        require_once(PATH . '/app/exceptionManager.php');
+        $exceptionManager = exceptionManager::getInstance();
 
         $result = preg_replace_callback(
             '/\{\{([^}]+)\}\}/',
-            function ($matches) use ($errorsManager) {
+            function ($matches) use ($exceptionManager) {
                 $code = trim($matches[1]);
 
                 // Check if the code starts with 'echo '
@@ -146,7 +146,7 @@ class renderEngine
                 } else {
                     // Remove the buffer file and throw an error for illegal operation in curly brackets
                     $this->removeBufferFile();
-                    $errorsManager->throw(10, "Illegal operation in curly brackets: " . htmlspecialchars($code));
+                    $exceptionManager->throw(6013, "Illegal operation in curly brackets:" . htmlspecialchars($code));
                 }
             },
             $raw

@@ -5,9 +5,9 @@ require_once PATH . '/vendor/autoload.php';
 use Settings\config;
 use App\requestManager;
 use App\pagesManager;
-use App\redirectionsManager;
-use App\errorsManager;
-use App\translationsManager;
+use App\redirectionManager;
+use App\exceptionManager;
+use App\translationManager;
 use App\middlewareManager;
 
 // -----------------------------------------
@@ -21,6 +21,7 @@ use App\middlewareManager;
 // *****************************************
 // *****************************************
 
+require_once(PATH . '/vendor/autoload.php');
 
 $config = config::getInstance();
 
@@ -30,13 +31,16 @@ $pagesManager = pagesManager::getInstance();
 
 require_once(PATH . '/app/pageClass.php');
 
-$redirectionsManager = redirectionsManager::getInstance();
+$redirectionManager = redirectionManager::getInstance();
 
-$errorsManager = errorsManager::getInstance();
+$exceptionManager = exceptionManager::getInstance();
 
-$translationsManager = translationsManager::getInstance();
+$translationManager = translationManager::getInstance();
 
-require_once(PATH . '/vendor/autoload.php');
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
 
 // *****************************************
 // *****************************************
@@ -64,13 +68,13 @@ foreach ($pages as $page) {
 
 // Check if the requested domain matches the configured domain
 if ($config->getDomain() != $requestManager->getDomain()) {
-    $errorsManager->throw(0, 'Domain error');
+    $exceptionManager->throw(6000, 'Invalid domain');
     exit;
 }
 
 // Check if a redirection exists for the requested URI
-if ($redirectionsManager->exists($requestManager->getUri())) {
-    header('Location: ' . $config->getProtocol() . '://' . $config->getDomain() . $redirectionsManager->getRedirection($requestManager->getUri()));
+if ($redirectionManager->exists($requestManager->getUri())) {
+    header('Location: ' . $config->getProtocol() . '://' . $config->getDomain() . $redirectionManager->getRedirection($requestManager->getUri()));
     exit;
 }
 
@@ -82,12 +86,12 @@ if (!$requestManager->isHttps() && $config->isHttpsRedirectEnabled()) {
 
 // Check if the requested URI exists
 if (!$pagesManager->exists($requestManager->getUri())) {
-    $errorsManager->throw(1, "That page not exists");
+    $exceptionManager->throw(6001, "Page does not exist");
 }
 
 // Check if the content for the requested URI exists
 if (!$pagesManager->contentExists($requestManager->getUri())) {
-    $errorsManager->throw(2, "Content of that page doesnt exist");
+    $exceptionManager->throw(6002, "There is no content for the page");
 }
 
 
@@ -124,13 +128,13 @@ $middlewareManager->loadMiddleware($current_page->getMiddleware());
 $controllerClass = 'Controllers\\' . $current_page->getControllerName();
 
 if (!class_exists($controllerClass)) {
-    $errorsManager->throw(12, 'Controller class not found.');
+    $exceptionManager->throw(6003, 'No controller for this request');
 }
 
 $controller = new $controllerClass();
 
 if (!method_exists($controller, 'show')) {
-    $errorsManager->throw(11, 'No show method in controller');
+    $exceptionManager->throw(6004, 'There is no show method');
 }
 
 echo $controller->show($current_page->getContentPath(), $current_page->getLayoutPath());

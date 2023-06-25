@@ -3,7 +3,7 @@
 namespace Middleware;
 
 use \App\requestManager;
-use \App\errorsManager;
+use \App\exceptionManager;
 
 class ipAddressMiddleware
 {
@@ -16,10 +16,10 @@ class ipAddressMiddleware
     public function checkIpAddress()
     {
         $requestManager = requestManager::getInstance();
-        $errorsManager = errorsManager::getInstance();
+        $exceptionManager = exceptionManager::getInstance();
 
         if ($requestManager->getUserIp() == "192.168.0.99") {
-            $errorsManager->throw(900, 'Sorry but you are not welcome :(');
+            $exceptionManager->throw(5000, 'Sorry but you are not welcome :(');
         }
     }
 }

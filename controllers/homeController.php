@@ -5,7 +5,7 @@ namespace Controllers;
 use App\renderEngine;
 use Settings\config;
 use App\mailManager;
-use App\modelsManager;
+use App\modelManager;
 
 class homeController
 {
@@ -23,7 +23,7 @@ class homeController
         $mailManager = mailManager::getInstance();
 
         // Get models manager
-        $modelsManager = modelsManager::getInstance();
+        $modelManager = modelManager::getInstance();
 
         // Calculate time
         $discoveryOfAmerica = new \DateTime('1492-10-12');
@@ -53,7 +53,7 @@ class homeController
         // );
 
         // Get country model
-        $countriesModel = $modelsManager->getModel('countriesModel');
+        $countriesModel = $modelManager->getModel('countriesModel');
 
         // Variables to be passed to the view
         $customVariables = [

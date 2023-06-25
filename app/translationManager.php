@@ -2,7 +2,7 @@
 
 namespace App;
 
-class translationsManager
+class translationManager
 {
 
 
@@ -34,7 +34,7 @@ class translationsManager
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new translationsManager();
+            self::$instance = new translationManager();
         }
         return self::$instance;
     }

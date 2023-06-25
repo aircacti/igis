@@ -3,10 +3,10 @@
 namespace App;
 
 use Settings\config;
-use App\errorsManager;
+use App\exceptionManager;
 use \DB;
 
-class modelsManager
+class modelManager
 {
 
 
@@ -36,12 +36,12 @@ class modelsManager
     {
 
         // Get errors manager
-        $errorsManager = errorsManager::getInstance();
+        $exceptionManager = exceptionManager::getInstance();
 
-        $modelClass = 'Models\\' . $modelName;
+        $modelClass = 'Model\\' . $modelName;
 
         if (!class_exists($modelClass)) {
-            $errorsManager->throw(55, 'Model class not found.');
+            $exceptionManager->throw(6005, 'Model not found');
         }
 
         $model = new $modelClass();
@@ -51,10 +51,6 @@ class modelsManager
 
     public function modelExists($modelName)
     {
-
-        // Get errors manager
-        $errorsManager = errorsManager::getInstance();
-
         $modelClass = 'Models\\' . $modelName;
 
         return class_exists($modelClass);
@@ -72,7 +68,7 @@ class modelsManager
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new modelsManager();
+            self::$instance = new modelManager();
         }
         return self::$instance;
     }
