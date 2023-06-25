@@ -1,3 +1,5 @@
+#The project is currently under construction and is not yet ready for use. However, we encourage you to follow the progress and actively participate in its development. The work is progressing rapidly, so we will likely release a stable version soon.
+
 # PHP Framework
 
 ![Framework Logo in future :)](logo.png)
