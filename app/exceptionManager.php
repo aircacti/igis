@@ -3,8 +3,6 @@
 namespace App;
 
 use Settings\config;
-use App\renderEngine;
-use Exception;
 
 class exceptionManager
 {
@@ -24,30 +22,51 @@ class exceptionManager
     // *****************************************
     // *****************************************
 
-    // This function echoes an error code and description, and terminates script execution.
-    public function throw($code = 0, $description = null)
+    public function __construct()
     {
-
         // Get config manager
         $config = config::getInstance();
 
-        // Get render engine
-        $renderEngine = renderEngine::getInstance();
+        if ($config->isDebugMode()) {
+            $this->registerWhoops();
+        } else {
+            $this->disableErrorsDisplay();
+        }
+    }
+
+    public function registerWhoops()
+    {
+        // Get config manager
+        $config = config::getInstance();
+
+        $whoops = new \Whoops\Run;
+        $handler = new \Whoops\Handler\PrettyPageHandler;
+        $handler->addDataTable('Framework settings', $config->getAllProperties());
+        $whoops->pushHandler($handler);
+        $whoops->register();
+    }
+
+    public function disableErrorsDisplay()
+    {
+        error_reporting(0);
+        ini_set('display_errors', 0);
+        ini_set('display_startup_errors', 0);
+    }
+
+    public function throw($code = 0, $description = null)
+    {
+        // Get config manager
+        $config = config::getInstance();
 
         if ($config->isDebugMode()) {
             throw new \Exception($description, $code);
         } else {
             $this->code = $code;
+            $controllerClass = 'Controllers\\' . $config->getExceptionControllerName();
 
-            try {
-                $controllerClass = 'Controllers\\oopsController';
+            $controller = new $controllerClass();
 
-                $controller = new $controllerClass();
-
-                echo $controller->show('/views/content/oops.php', '/views/layouts/oops.php');
-            } catch (Exception $e) {
-                echo 'WTF';
-            }
+            echo $controller->show($config->getExceptionContentPath(), $config->getExceptionLayoutPath());
         }
 
         exit;

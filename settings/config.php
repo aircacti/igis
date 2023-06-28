@@ -12,16 +12,25 @@ class config
     // *****************************************
 
     // Assign a domain to the site
-    private $domain = "igis.igis";
+    private $domain = 'igis.igis';
 
     // Display if there is a page with a different case url
     private $uri_case_sensitive = false;
 
     // Display detailed error messages instead of a generalized error page
-    private $debug = true;
+    private $debug = false;
+
+    // Default controller to display non-debug exception page
+    private $exceptionControllerName = 'oopsController';
+
+    // Default layout to display non-debug exception page
+    private $exceptionLayoutPath = '/views/layouts/oops.php';
+
+    // Default content to display non-debug exception page
+    private $exceptionContentPath = '/views/content/oops.php';
 
     // Default language for translations
-    private $mainLanguage = "en";
+    private $mainLanguage = 'en';
 
     // Display the "Missing translation" message when a translation is missing instead of displaying the translation for the main language
     private $missingTranslation = true;
@@ -42,10 +51,10 @@ class config
 
     // Mailing settings
     private $mailDebug = 0; // Debug level for email sending
-    private $mailHost = "x.com"; // SMTP host
-    private $mailUsername = "x@x.com"; // SMTP username
+    private $mailHost = 'x.com'; // SMTP host
+    private $mailUsername = 'x@x.com'; // SMTP username
     private $mailPassword = 'xx'; // SMTP password
-    private $mailSMTPSecure = "tls"; // SMTP encryption method
+    private $mailSMTPSecure = 'tls'; // SMTP encryption method
     private $mailSMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,
@@ -72,7 +81,7 @@ class config
 
     public function getProtocol()
     {
-        return $this->httpsRedirect ? "https" : "http";
+        return $this->httpsRedirect ? 'https' : 'http';
     }
 
     public function getDomain()
@@ -183,6 +192,43 @@ class config
     public function getDbPort()
     {
         return $this->port;
+    }
+
+    public function getExceptionControllerName()
+    {
+        return $this->exceptionControllerName;
+    }
+
+    public function getExceptionLayoutPath()
+    {
+        return $this->exceptionLayoutPath;
+    }
+
+    public function getExceptionContentPath()
+    {
+        return $this->exceptionContentPath;
+    }
+
+    // Testing
+    public function getAllProperties()
+    {
+        $reflection = new \ReflectionClass($this);
+        $properties = $reflection->getProperties(\ReflectionProperty::IS_PRIVATE);
+        $propertyValues = array();
+
+        foreach ($properties as $property) {
+            $property->setAccessible(true);
+            $propertyName = $property->getName();
+            $propertyValue = $property->getValue($this);
+
+            if (preg_match("/user|password|host|instance/i", $propertyName)) {
+                $propertyValue = "IGIS_HIDDEN";
+            }
+
+            $propertyValues[$propertyName] = $propertyValue;
+        }
+
+        return $propertyValues;
     }
 
 

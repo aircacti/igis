@@ -5,8 +5,6 @@ namespace Controllers;
 use App\renderEngine;
 use Settings\config;
 use App\exceptionManager;
-use app\requestManager;
-use Exception;
 
 class oopsController
 {

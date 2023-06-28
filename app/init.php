@@ -21,25 +21,19 @@ use App\middlewareManager;
 // *****************************************
 // *****************************************
 
-require_once(PATH . '/vendor/autoload.php');
-
 $config = config::getInstance();
+
+$exceptionManager = exceptionManager::getInstance();
 
 $requestManager = requestManager::getInstance();
 
 $pagesManager = pagesManager::getInstance();
 
-require_once(PATH . '/app/pageClass.php');
+require_once(PATH . '/app/page.php');
 
 $redirectionManager = redirectionManager::getInstance();
 
-$exceptionManager = exceptionManager::getInstance();
-
 $translationManager = translationManager::getInstance();
-
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
 
 
 // *****************************************
