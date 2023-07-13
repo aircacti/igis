@@ -36,8 +36,6 @@ To get started with our PHP framework, follow these:
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
 * PHP 8.2^
 * COMPOSER 2.5.5^
 * HTTP SERVER
