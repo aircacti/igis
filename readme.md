@@ -1,12 +1,26 @@
-#The project is currently under construction and is not yet ready for use. However, we encourage you to follow the progress and actively participate in its development. The work is progressing rapidly, so we will likely release a stable version soon.
+# IGIS PHP FRAMEWORK
 
-# PHP Framework
+![Framework Logo](/public/imgs/igis_logo.png)
 
-![Framework Logo in future :)](logo.png)
+![Issues](https://img.shields.io/github/issues/aircacti/igis) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+
+## Table Of Contents
+
+* [About the Project](#about-the-project)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Documentation](#documentation)
+* [License](#license)
+* [Authors](#authors)
+
+
+## About The Project
+
 
 Welcome to our PHP framework! Our framework focuses on simplicity and ease of use, allowing you to build powerful applications without the need for extensive documentation or a steep learning curve. With its MVC architecture and intuitive features, you'll be up and running in no time!
 
-## Key Features
+Key Features:
 
 - **Easy to Understand:** Our framework is designed with simplicity in mind. You can grasp the entire framework and its concepts within just a few hours, making it ideal for developers of all skill levels.
 - **MVC Architecture:** The framework follows the Model-View-Controller (MVC) architectural pattern, providing a structured approach to organizing your code and separating business logic from presentation.
@@ -18,13 +32,23 @@ Welcome to our PHP framework! Our framework focuses on simplicity and ease of us
 
 ## Getting Started
 
-To get started with our PHP framework, follow these steps:
+To get started with our PHP framework, follow these:
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+
+* PHP 8.2^
+* COMPOSER 2.5.5^
+* HTTP SERVER
+
+### Installation
 
 1. Clone the repository
-2. Configure your settings in `/settings/*`
-3. Install dependencies: Run `composer install` to install the required packages.
 
-For more detailed information on installation, configuration, and usage, please refer to the [Documentation](https://github.com/aircacti/igis).
+2. Configure your settings in `/settings/*`
+
+3. Install dependencies: Run `composer install` to install the required packages.
 
 ## Documentation
 
@@ -34,10 +58,12 @@ _It will be available soon_
 
 Please refer to the documentation for in-depth explanations, code examples, and best practices.
 
-## Support
 
-If you have any questions or need assistance, feel free to reach out to our community through the following channels:
+## License
 
-- [GitHub Issues](https://github.com/aircacti/igis/issues)
+Distributed under the MIT License.
 
-Happy coding!
+## Authors
+
+* **aircacti** - [aircacti](https://github.com/aircacti) 
+
