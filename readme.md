@@ -1,6 +1,6 @@
 # IGIS PHP FRAMEWORK
 
-![Framework Logo](/public/imgs/igis_logo.png)
+![Framework Logo](https://github.com/aircacti/igis/blob/master/public/resources/imgs/igis_logo.png?raw=true)
 
 ![Issues](https://img.shields.io/github/issues/aircacti/igis) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
