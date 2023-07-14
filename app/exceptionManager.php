@@ -53,13 +53,18 @@ class exceptionManager
         ini_set('display_startup_errors', 0);
     }
 
-    public function throw($code = 0, $description = null)
+    public function throw($code = 0, $additionalDesc = null)
     {
         // Get config manager
         $config = config::getInstance();
 
         if ($config->isDebugMode()) {
-            throw new \Exception($description, $code);
+            $shortDescription = $this->getExceptionShortDescription($code);
+            $longDescription = $this->getExceptionLongDescription($code);
+
+            $combinedDescription = $shortDescription . ' (' . $longDescription . ') + ' . $additionalDesc;
+
+            throw new \Exception($combinedDescription, $code);
         } else {
             $this->code = $code;
             $controllerClass = 'Controllers\\' . $config->getExceptionControllerName();
@@ -76,6 +81,34 @@ class exceptionManager
     {
         return $this->code;
     }
+
+    function getExceptionShortDescription($exceptionCode)
+    {
+        $jsonFile = PATH . '/settings/exceptionCodes.json';
+        $jsonData = file_get_contents($jsonFile);
+        $data = json_decode($jsonData, true);
+
+        if (isset($data[$exceptionCode]['shortDescription'])) {
+            return $data[$exceptionCode]['shortDescription'];
+        }
+
+        return 'Exception code short description not found.';
+    }
+
+    function getExceptionLongDescription($exceptionCode)
+    {
+        $jsonFile = PATH . '/settings/exceptionCodes.json';
+        $jsonData = file_get_contents($jsonFile);
+        $data = json_decode($jsonData, true);
+
+        if (isset($data[$exceptionCode]['longDescription'])) {
+            return $data[$exceptionCode]['longDescription'];
+        }
+
+        return 'Exception code long description not found.';
+    }
+
+
 
     // *****************************************
     // *****************************************
